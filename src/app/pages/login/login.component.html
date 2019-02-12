@@ -1,3 +1,16 @@
-<p>
-  login works!
-</p>
+<h1>Login</h1>
+<hr>
+<div class="row justify-content-center">
+  <div class="col-9">
+    <form class="p-4" (ngSubmit)="ingresar()" >
+      <input type="text"
+             [(ngModel)]="nombre" 
+             class="form-control"
+             name="nombre"
+             placeholder="Nombre de usuario"
+             autofocus>
+      <button class="btn btn-primary btn-block margin-top-10"
+              [disabled]="nombre.trim().length === 0">Ingresar</button>       
+    </form>
+  </div>
+</div>

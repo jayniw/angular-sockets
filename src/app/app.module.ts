@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +27,8 @@ import { MensajesComponent } from './pages/mensajes/mensajes.component';
   imports: [
     BrowserModule,
     FormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

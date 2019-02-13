@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Usuario } from '../classes/usuario';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   public socketStatus = false;
-  public usuario: Usuario;
+  public usuario: Usuario = null;
 
   constructor( private socket: Socket) {
+    this.cargarStorage();
     this.checkStatus();
   }
   // verificar el estado del servidor
@@ -33,10 +35,22 @@ export class WebsocketService {
   }
 
   loginWS( nombre: string) {
-    console.log('Configurando', nombre);
-    this.emit( 'configurar-usuario', { nombre }, resp => {
-      console.log(resp);
-
+    return new Promise( (resolve, reject) => {
+      this.emit( 'configurar-usuario', { nombre }, resp => {
+        this.usuario = new Usuario(nombre);
+        this.guardarStorage();
+       resolve();
+      });
     });
+  }
+
+  guardarStorage() {
+    localStorage.setItem('usuario', JSON.stringify(this.usuario));
+  }
+
+  cargarStorage() {
+    if (localStorage.getItem('usuario')) {
+      this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    }
   }
 }
